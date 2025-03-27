@@ -16,5 +16,24 @@ export const CurrentlyReading = ({
   currentSentenceIdx: number;
   sentences: string[];
 }) => {
-  return <div data-testid="currently-reading"></div>;
+  const currentSentence = sentences[currentSentenceIdx] || "";
+  const [start, end] = currentWordRange;
+
+  // Extract the current word from the sentence
+  const currentWord = currentSentence.substring(start, end + 1);
+  const beforeWord = currentSentence.substring(0, start);
+  const afterWord = currentSentence.substring(end + 1);
+
+  return (
+    <div data-testid="currently-reading">
+      <p data-testid="current-sentence" style={{ marginBottom: 20 }}>
+        {beforeWord}
+        <span data-testid="current-word" style={{ color: "red" }}>
+          {currentWord}
+        </span>
+        {afterWord}
+      </p>
+      <div>{sentences.join(" ")}</div>
+    </div>
+  );
 };
